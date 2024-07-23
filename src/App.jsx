@@ -3,17 +3,22 @@ import contacts from "./contacts.json";
 import "./App.css";
 
 function App() {
+  
   const [contactList, setContactList] = useState(contacts.slice(0, 5));
 
+  
   const addRandomContact = () => {
     const remainingContacts = contacts.filter(
       (contact) => !contactList.includes(contact)
     );
-    const randomContact =
-      remainingContacts[Math.floor(Math.random() * remainingContacts.length)];
-    setContactList((prevContacts) => [...prevContacts, randomContact]);
+    if (remainingContacts.length > 0) {
+      const randomContact =
+        remainingContacts[Math.floor(Math.random() * remainingContacts.length)];
+      setContactList([...contactList, randomContact]);
+    }
   };
 
+  
   const sortByName = () => {
     const sortedContacts = [...contactList].sort((a, b) =>
       a.name.localeCompare(b.name)
@@ -21,6 +26,7 @@ function App() {
     setContactList(sortedContacts);
   };
 
+  
   const sortByPopularity = () => {
     const sortedContacts = [...contactList].sort(
       (a, b) => b.popularity - a.popularity
@@ -31,11 +37,9 @@ function App() {
   return (
     <div className="App">
       <h1>IronContacts</h1>
-      <div>
-        <button onClick={addRandomContact}>Add Random Contact</button>
-        <button onClick={sortByName}>Sort by Name</button>
-        <button onClick={sortByPopularity}>Sort by Popularity</button>
-      </div>
+      <button onClick={addRandomContact}>Add Random Contact</button>
+      <button onClick={sortByName}>Sort by Name</button>
+      <button onClick={sortByPopularity}>Sort by Popularity</button>
       <table>
         <thead>
           <tr>
